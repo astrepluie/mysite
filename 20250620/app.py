@@ -5,7 +5,13 @@ from invest import Quant
 from database import MyDB
 
 # MyDB class 생성
-mydb = MyDB()
+mydb = MyDB(
+    _host = 'kmminna.mysql.pythonanywhere-services.com',
+    _port = 3306,
+    _user = 'kmminna',
+    _pw = 'rain1234',
+    _db_name = 'kmminna$default'
+)
 
 # Flask 클래스 생성
 # 생성자 함수에 필요한 인자 : 파일의 이름
@@ -104,5 +110,3 @@ def invest() :
     }
     return res_data 
 
-# 웹서버 실행
-app.run(debug = True)

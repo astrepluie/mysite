@@ -2,7 +2,13 @@ import pymysql
 from database import MyDB
 
 # MyDB class 생성
-mydb = MyDB()
+mydb = MyDB(
+    _host = 'kmminna.mysql.pythonanywhere-services.com',
+    _port = 3306,
+    _user = 'kmminna',
+    _pw = 'rain1234',
+    _db_name = 'kmminna$default'
+)
 
 # table 생성 쿼리문
 create_user = """
