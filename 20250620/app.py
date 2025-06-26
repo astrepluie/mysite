@@ -85,7 +85,7 @@ def invest() :
     input_kind = request.args['kind']
     print(input_code, input_start_time, input_end_time, input_kind)
     # input_code를 이용해서 csv 파일 로드
-    df = pd.read_csv(f'csv/{input_code}.csv')
+    df = pd.read_csv(f'home/kmminna/mysite/csv/{input_code}.csv')
     df.rename(columns = {'날짜' : 'Date'}, inplace = True)
     quant = Quant(df, _start = input_start_time, _end = input_end_time, _col = 'Close')
     if input_kind == 'bnh' :
