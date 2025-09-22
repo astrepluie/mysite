@@ -17,7 +17,7 @@ def tabnet_run(X_train, y_train, X_test, use_SMOTE) :
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
-    
+
     # -----------------------------
     # Optuna 목적 함수
     # -----------------------------
@@ -44,8 +44,8 @@ def tabnet_run(X_train, y_train, X_test, use_SMOTE) :
         oof_idx = np.zeros(len(y), dtype=bool)
 
         for fold, (tr_idx, val_idx) in enumerate(skf.split(X, y)):
-            X_tr, X_val = X_train[tr_idx], X_train[val_idx]
-            y_tr, y_val = y_train.iloc[tr_idx], y_train.iloc[val_idx]
+            X_tr, X_val = X[tr_idx], X[val_idx]
+            y_tr, y_val = y.iloc[tr_idx], y.iloc[val_idx]
                     
             model.fit(
                 X_tr, y_tr,
@@ -64,7 +64,7 @@ def tabnet_run(X_train, y_train, X_test, use_SMOTE) :
         assert oof_idx.all()
 
         # OOF 기반으로 최적 threshold 찾기
-        best_thr, best_f1 = find_best_threshold(y_train, oof_probs)
+        best_thr, best_f1 = find_best_threshold(y, oof_probs)
 
         # Optuna는 maximize 하므로 F1 반환
         # (또는 -best_f1을 minimize로 해도 됨)

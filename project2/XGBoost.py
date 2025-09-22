@@ -41,8 +41,6 @@ def xg_run(X_train, y_train, X_test, use_SMOTE = False) :
                     
             model.fit(X_tr, y_tr, 
                     eval_set = [(X_val, y_val)],
-                    eval_metric="logloss",
-                    early_stopping_rounds=10,    
                     verbose=True
                 )
 
@@ -81,9 +79,7 @@ def xg_run(X_train, y_train, X_test, use_SMOTE = False) :
             y_tr, y_val = y_train.iloc[tr_idx], y_train.iloc[val_idx]
         
             model.fit(X_tr, y_tr, 
-                    eval_set = [(X_val, y_val)],
-                    eval_metric="logloss",
-                    early_stopping_rounds=10,    
+                    eval_set = [(X_val, y_val)], 
                     verbose=True
                 )
 

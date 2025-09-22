@@ -7,13 +7,12 @@ from imblearn.over_sampling import BorderlineSMOTE
 from sklearn.utils import resample
 from thr import find_best_threshold
 
-
 def RF_run(X_train, y_train, X_test, use_SMOTE = False) :
     
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
-    
+        
     # 조기 종료용 콜백
     class EarlyStoppingCallback:
         def __init__(self, patience=10):
@@ -52,6 +51,7 @@ def RF_run(X_train, y_train, X_test, use_SMOTE = False) :
         )
         
         X_train_sub, y_train_sub = resample(X_train, y_train, n_samples=int(0.3*len(X_train)), random_state=42)
+      
         skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)
 
         oof_probs = np.zeros(len(y_train_sub))
@@ -71,7 +71,7 @@ def RF_run(X_train, y_train, X_test, use_SMOTE = False) :
         assert oof_idx.all()
 
         # OOF 기반으로 최적 threshold 찾기
-        best_thr, best_f1 = find_best_threshold(y_train, oof_probs)
+        best_thr, best_f1 = find_best_threshold(y_train_sub, oof_probs)
 
         # Optuna는 maximize 하므로 F1 반환
         # (또는 -best_f1을 minimize로 해도 됨)

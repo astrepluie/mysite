@@ -44,7 +44,7 @@ def lstm_run(X_train, y_train, X_test, use_SMOTE) :
         batch_size = trial.suggest_categorical("batch_size", [32,64])
         patience = trial.suggest_int("patience", 3, 10)
 
-        model = create_lstm_model(input_shape=(1, X_train.shape[1]),
+        model = create_lstm_model(input_shape=(1, X_train.shape[2]),
                                 hidden_units=hidden_units,
                                 dropout_rate=dropout_rate,
                                 learning_rate=learning_rate)
@@ -67,7 +67,7 @@ def lstm_run(X_train, y_train, X_test, use_SMOTE) :
                     callbacks=[es],
                     verbose=0)
             
-            probs = model.predict_proba(X_val)[:, 1]
+            probs = model.predict(X_val).squeeze()
             
             oof_probs[val_idx] = probs
             oof_idx[val_idx] = True
@@ -96,7 +96,7 @@ def lstm_run(X_train, y_train, X_test, use_SMOTE) :
     best_params = study.best_params
     best_thr = study.best_trial.user_attrs.get("best_threshold")
 
-    model = create_lstm_model(input_shape=(1, X_train.shape[1]),
+    model = create_lstm_model(input_shape=(1, X_train.shape[2]),
                                     hidden_units=best_params['hidden_units'],
                                     dropout_rate=best_params['dropout_rate'],
                                     learning_rate=best_params['learning_rate'])
@@ -118,7 +118,7 @@ def lstm_run(X_train, y_train, X_test, use_SMOTE) :
                 callbacks=[es],
                     verbose=1)
     
-    y_prob = model.predict_proba(X_test)[:,1]
+    y_prob = model.predict(X_test).squeeze()
     y_pred = (y_prob >= best_thr).astype(int)
 
     return {'best_params' : best_params, 'best_thr' : best_thr, 'y_prob' : y_prob, 'y_pred' : y_pred}
