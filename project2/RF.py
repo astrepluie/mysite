@@ -52,7 +52,7 @@ def RF_run(X_train, y_train, X_test, use_SMOTE = False) :
         
         X_train_sub, y_train_sub = resample(X_train, y_train, n_samples=int(0.3*len(X_train)), random_state=42)
       
-        skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)
+        skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
         oof_probs = np.zeros(len(y_train_sub))
         oof_idx = np.zeros(len(y_train_sub), dtype=bool)

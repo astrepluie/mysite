@@ -19,7 +19,7 @@ def lstm_run(X_train, y_train, X_test, use_SMOTE) :
     X_train = X_train.reshape((X_train.shape[0], 1, X_train.shape[1]))
     X_test = X_test.reshape((X_test.shape[0], 1, X_test.shape[1]))
     
-    skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
     
     # -----------------------------
     # LSTM 모델 생성 함수

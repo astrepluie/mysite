@@ -12,7 +12,7 @@ def xg_run(X_train, y_train, X_test, use_SMOTE = False) :
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
     
-    skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
     # Optuna 목적 함수
     def objective(trial, X_train, y_train):
         params = {
